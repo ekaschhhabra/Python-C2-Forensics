@@ -27,13 +27,9 @@ The primary engineering goal of this project was to solve the **"Reverse Proxy M
 ### 1. The Command Center (Admin Dashboard)!
 ![Dashboard](https://github.com/user-attachments/assets/731480ef-d566-4f36-8ff7-1a3babe50a8d)
 
-*Real-time monitoring of incoming connections and captured credentials.*
-![Dashboard Preview](https://github.com/ekaschhhabra/The_Exploiters_Hackhathon2025/blob/main/assets/dashboard_preview.png?raw=true)
-
 
 ### 2. Mobile Attack Vector
 *Responsive login simulation deployed via secure tunnel.*
-![Mobile Preview](https://github.com/ekaschhhabra/The_Exploiters_Hackhathon2025/blob/main/assets/mobile_preview.png?raw=true)
 <img width="317" height="707" alt="Screenshot 2026-01-05 210915" src="https://github.com/user-attachments/assets/ae1c01b4-299b-433b-9c3d-5ef4709873b2" />
 
 ## 🛠️ Technical Architecture
