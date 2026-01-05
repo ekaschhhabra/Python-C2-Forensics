@@ -24,11 +24,12 @@ The primary engineering goal of this project was to solve the **"Reverse Proxy M
 
 ## 📸 Interface Preview
 
-### 1. The Command Center (Admin Dashboard)![Dashboard]
+### 1. The Command Center (Admin Dashboard)!
+![Dashboard](https://github.com/user-attachments/assets/731480ef-d566-4f36-8ff7-1a3babe50a8d)
 
 *Real-time monitoring of incoming connections and captured credentials.*
 ![Dashboard Preview](https://github.com/ekaschhhabra/The_Exploiters_Hackhathon2025/blob/main/assets/dashboard_preview.png?raw=true)
-(https://github.com/user-attachments/assets/399c6f2e-20a2-43c0-b50c-113c4375f1f7)
+
 
 ### 2. Mobile Attack Vector
 *Responsive login simulation deployed via secure tunnel.*
@@ -40,6 +41,7 @@ The primary engineering goal of this project was to solve the **"Reverse Proxy M
 ### Tech Stack
 * **Backend:** Python 3 (Flask, Jinja2)
 * **Database:** SQLite3 (Lightweight, serverless persistence)
+
 * **Frontend:** HTML5, CSS3 (Modern Flexbox/Grid layouts)
 * **Tunneling:** Compatible with Ngrok, Serveo, or Cloudflared
 
